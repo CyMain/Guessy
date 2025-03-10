@@ -15,3 +15,23 @@ body{
   justify-content: center;
   background-color: #03624c;
 }
+
+.flex-visible{
+  display: flex;
+}
+
+.invisible{
+  display: none;
+}
+
+.fade-in-out{
+  animation: fade-in-out 5s ease-in-out;
+}
+
+.fade-in{
+  animation: fade-in 4s ease-in-out;
+}
+
+.fade-out{
+  animation: fade-out 4s ease-in-out;
+}

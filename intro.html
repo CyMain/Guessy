@@ -6,14 +6,17 @@
   <title>Guessy</title>
   <link rel="stylesheet" href="./styles/intro.css">
   <link rel="stylesheet" href="./styles/general-intro.css">
+  <link rel="stylesheet" href="./styles/animations.css">
 </head>
 <body>
   <div class="UI-container">
-    <form>
+    <section class="welcome fade-in-out invisible ">Welcome To Guessy!</section>
+    <form class="invisible fade-in">
       <label for="username">What's your name?</label>
       <input name="username" id="username" placeholder="Enter your name(Mike, Sonic, John Cena...)">
       <button>Done</button>
     </form>
+    <section class="greeting flex-visible fade-in">Greetings [insert name]!!</section>
   </div>
   
 </body>
