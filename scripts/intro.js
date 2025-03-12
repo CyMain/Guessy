@@ -1,5 +1,7 @@
 renderIntro();
 
+let uName;
+
 function renderIntro(){
   html = `
   <section class="welcome fade-in-out flex-visible">Welcome To Guessy!</section>
@@ -31,8 +33,8 @@ function renderIntro(){
 function acceptName(){
   const greeting = document.querySelector('.greeting');
   const form = document.querySelector('form');
-  let name = document.querySelector('input').value;
-  greeting.innerHTML = `Greetings ${name}`;
+  let sName = document.querySelector('input').value;
+  greeting.innerHTML = `Greetings ${sName}`;
   form.classList.add('invisible');
   form.classList.remove('flex-visible');
   greeting.classList.add('flex-visible');
@@ -40,4 +42,5 @@ function acceptName(){
   setTimeout(() => {
     window.location = "./guessy.html";
   }, 4000)
+  uName = sName;
 }
