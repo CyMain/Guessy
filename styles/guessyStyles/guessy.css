@@ -1,3 +1,42 @@
-.invisible{
-  display:none;
+.container{
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  height:95%;
+  gap: 2vw;
+  padding: 3vw;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--mainColor2);
+}
+
+.entry{
+  background-color: var(--subColor2);
+  width: 100%;
+  height: 8vw;
+  border-radius: 2vh;
+}
+
+.letters{
+  display: grid;
+  place-content: center;
+  grid-template-columns: 4vw 4vw 4vw 4vw 4vw;
+  column-gap: 7vw;
+  row-gap: 2vw;
+  place-items: center;
+}
+
+.letter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--buttonColor3);
+  width: 8vw;
+  height: 12vh;
+  border-radius: 4vh;
+  border: none;
+
+  &:hover{
+    background-color: var(--buttonColor2);
+  }
 }
