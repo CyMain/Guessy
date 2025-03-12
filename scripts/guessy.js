@@ -45,12 +45,31 @@ function randizeArray(arr){
   }
   return newArr;
 }
+
+function swapIndexPosition(arr, index1, index2){
+  let temp = arr[index1];
+  arr[index1] = arr[index2];
+  arr[index2] = temp;
+  console.log(arr);
+  return arr;
+}
+
 function lettersHtml(lettersArray){
  let html = `
   
  `;
  let count = 0;
   let randedArray = randizeArray(lettersArray);
+  randedArray.forEach((letter)=>{
+    console.log(randedArray);
+    console.log(lettersInWTG)
+    if(lettersInWTG.includes(letter) && randedArray.indexOf(letter) >=19){
+      console.log('runa');
+      let indexToBeSwapped = Math.floor(Math.random() * 19);
+      randedArray = swapIndexPosition(randedArray, randedArray.indexOf(letter), indexToBeSwapped);
+    }
+    console.log(randedArray);
+  });
   randedArray.forEach((letter) => {
   while(count <= 19){
     html += `
@@ -83,7 +102,6 @@ function randLettersDisplayArr(){
     }
     if(found == false){
       newArr.push(letter);
-      console.log(newArr);
     }
     found = false;
   });
@@ -97,7 +115,6 @@ function getValidLetters(){
     while (found == false & count < wordToGuess.length){
       if(letter.toUpperCase() == wordToGuess[count]){
         lettersInWTG.push(letter);
-        console.log(letter, lettersInWTG);
         found = true;
         break;
       }
