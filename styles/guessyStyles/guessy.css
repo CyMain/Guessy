@@ -14,8 +14,10 @@
 .entry{
   background-color: var(--subColor2);
   width: 100%;
-  height: 8vw;
   border-radius: 2vh;
+  place-content: center;
+  min-height: 15vh;
+  padding: 3vh;
 }
 
 .letters{

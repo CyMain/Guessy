@@ -3,7 +3,7 @@ renderIntro();
 let uName;
 
 function renderIntro(){
-  html = `
+  let html = `
   <section class="welcome fade-in-out flex-visible">Welcome To Guessy!</section>
     <form class="invisible fade-in" method="dialog">
       <label for="username">What's your name?</label>

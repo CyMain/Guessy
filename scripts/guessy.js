@@ -4,12 +4,28 @@ let wordToGuess = 'SONIC';
 let currEntry = '';
 const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 const lettersInWTG =[];
+let finalizedLetters = [];
 console.log(wordToGuess);
 renderGame();
 
+function generateInput(letter){
+  console.log('runs');
+  document.querySelector('.entry').innerHTML += `
+    <button class="letter">
+        ${letter.toUpperCase()}
+    </button> 
+  `;
+}
+
+function acceptInput(letter){
+  if(!(currEntry.lenght >= wordToGuess.length)){
+    currEntry += letter;
+  }
+}
+
 function renderGame(){
   let html = `
-    <div class="entry">
+    <div class="entry flex-visible">
 
     </div>
     <div class="letters">
@@ -19,8 +35,13 @@ function renderGame(){
   document.querySelector('.container').innerHTML = html;
   const lettersHTML = document.querySelector('.letters'); 
   let displayLetters = randLettersDisplayArr();
-  console.log(displayLetters);
   lettersHTML.innerHTML += lettersHtml(displayLetters);
+
+  document.querySelectorAll('.letter').forEach((button) => {
+    button.addEventListener('click', () => {
+      generateInput(button.innerHTML);
+    })
+  });
 }
 
 function randizeArray(arr){
@@ -50,7 +71,6 @@ function swapIndexPosition(arr, index1, index2){
   let temp = arr[index1];
   arr[index1] = arr[index2];
   arr[index2] = temp;
-  console.log(arr);
   return arr;
 }
 
@@ -61,14 +81,10 @@ function lettersHtml(lettersArray){
  let count = 0;
   let randedArray = randizeArray(lettersArray);
   randedArray.forEach((letter)=>{
-    console.log(randedArray);
-    console.log(lettersInWTG)
-    if(lettersInWTG.includes(letter) && randedArray.indexOf(letter) >=19){
-      console.log('runa');
+    if((finalizedLetters.includes(letter)) && (randedArray.indexOf(letter)>=19)){
       let indexToBeSwapped = Math.floor(Math.random() * 19);
       randedArray = swapIndexPosition(randedArray, randedArray.indexOf(letter), indexToBeSwapped);
     }
-    console.log(randedArray);
   });
   randedArray.forEach((letter) => {
   while(count <= 19){
@@ -84,14 +100,13 @@ function lettersHtml(lettersArray){
  return html;
 }
 
-
 function randInt(start, finish){
   return Math.random() *(finish - start) + start;
 }
 
 function randLettersDisplayArr(){
   getValidLetters();
-  let newArr = lettersInWTG;
+  let newArr = lettersInWTG.copyWithin();
   let count = 0;
   let found = false;
   alphabets.forEach((letter)=> {
@@ -123,4 +138,6 @@ function getValidLetters(){
     found = false;
     count = 0;
   });
+  
+  finalizedLetters = lettersInWTG.filter(num => num !="");
 }
