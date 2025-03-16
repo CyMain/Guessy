@@ -1,5 +1,3 @@
-
-
 let wordToGuess = 'SONIC';
 let currEntry = '';
 const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -9,7 +7,6 @@ console.log(wordToGuess);
 renderGame();
 
 function generateInput(letter){
-  console.log('runs');
   document.querySelector('.entry').innerHTML += `
     <button class="letter">
         ${letter.toUpperCase()}
@@ -18,10 +15,47 @@ function generateInput(letter){
 }
 
 function acceptInput(letter){
-  if(!(currEntry.lenght >= wordToGuess.length)){
+  if(letter == wordToGuess[currEntry.length]){
     currEntry += letter;
+    if(currEntry.length == wordToGuess.length){
+      console.log('congrats, you got the word!!');
+
+      document.querySelectorAll('.letter').forEach((button) => {
+        button.style.pointerEvents = 'none';
+      });
+      setTimeout(()=> {
+        document.querySelectorAll('.letter').forEach((button) => {
+          button.style.pointerEvents = 'auto';
+        });
+      }, 5000);
+      setTimeout(()=> {
+        resetGame();
+      }, 10000);
+    }
+    generateInput(letter);
+    console.log(currEntry);
+  } else{
+    console.log('Incorrect input');
   }
 }
+
+function resetGame(){
+  currEntry = '';
+  let html = `
+    <div class="entry flex-visible">
+
+    </div>
+    <div class="letters">
+           
+    </div>
+  `;
+  document.querySelector('.container').innerHTML = html;
+  const lettersHTML = document.querySelector('.letters'); 
+  let displayLetters = randLettersDisplayArr();
+  console.log('still works!');
+  lettersHTML.innerHTML += lettersHtml(displayLetters);
+  console.log('still works!');
+};
 
 function renderGame(){
   let html = `
@@ -39,15 +73,15 @@ function renderGame(){
 
   document.querySelectorAll('.letter').forEach((button) => {
     button.addEventListener('click', () => {
-      generateInput(button.innerHTML);
+      acceptInput(button.innerText);
     })
   });
 }
 
 function randizeArray(arr){
   let newArr = [];
-  let curElem;
   for(let i = 0; i < arr.length; i++){
+    console.log('still works 22!!');
     let currElem = arr[Math.floor(Math.random() * (arr.length))];
     let repeat = false;
     if(newArr.includes(currElem)){
@@ -61,7 +95,7 @@ function randizeArray(arr){
         repeat = false;
       }
     }
-
+    console.log(`still works 23!${i}! ${arr.length} then the array is ${arr}`);
     newArr.push(currElem);
   }
   return newArr;
@@ -79,10 +113,13 @@ function lettersHtml(lettersArray){
   
  `;
  let count = 0;
+ 
   let randedArray = randizeArray(lettersArray);
+  console.log('still works2!');
   randedArray.forEach((letter)=>{
+    console.log('still works3!');
     if((finalizedLetters.includes(letter)) && (randedArray.indexOf(letter)>=19)){
-      let indexToBeSwapped = Math.floor(Math.random() * 19);
+      let indexToBeSwapped = Math.floor(Math.random() * 18);
       randedArray = swapIndexPosition(randedArray, randedArray.indexOf(letter), indexToBeSwapped);
     }
   });

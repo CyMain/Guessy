@@ -18,6 +18,7 @@
   place-content: center;
   min-height: 15vh;
   padding: 3vh;
+  gap:1vw;
 }
 
 .letters{
