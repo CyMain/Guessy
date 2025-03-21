@@ -154,6 +154,7 @@ function randLettersDisplayArr(){
     }
     if(found == false){
       newArr.push(letter);
+      console.log(newArr);
     }
     found = false;
   });
@@ -165,7 +166,7 @@ function getValidLetters(){
   let found = false;
   alphabets.forEach((letter)=> {
     while (found == false & count < wordToGuess.length){
-      if(letter.toUpperCase() == wordToGuess[count]){
+      if((letter.toUpperCase() == wordToGuess[count]) && (!(lettersInWTG.includes(letter)))){
         lettersInWTG.push(letter);
         found = true;
         break;
@@ -175,6 +176,7 @@ function getValidLetters(){
     found = false;
     count = 0;
   });
+  console.log(`The new letterInWTG is ${lettersInWTG}`);
   
   finalizedLetters = lettersInWTG.filter(num => num !="");
 }
