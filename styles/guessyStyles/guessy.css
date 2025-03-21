@@ -40,6 +40,7 @@
   border-radius: 4vh;
   border: none;
   font-size:4em;
+  font-style:bold;
 
   &:hover{
     background-color: var(--buttonColor2);
