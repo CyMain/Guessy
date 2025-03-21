@@ -1,10 +1,13 @@
-let wordToGuess = 'SONIC';
+const guessWords = ['SONIC', 'CHARA', 'CYRUS', 'DIPPER'];
+let wordToGuess = '';
 let currEntry = '';
 const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-const lettersInWTG =[];
+let lettersInWTG =[];
 let finalizedLetters = [];
 console.log(wordToGuess);
 renderGame();
+
+
 
 function generateInput(letter){
   document.querySelector('.entry').innerHTML += `
@@ -27,10 +30,10 @@ function acceptInput(letter){
         document.querySelectorAll('.letter').forEach((button) => {
           button.style.pointerEvents = 'auto';
         });
-      }, 5000);
+      }, 3000);
       setTimeout(()=> {
         resetGame();
-      }, 10000);
+      }, 2000);
     }
     generateInput(letter);
     console.log(currEntry);
@@ -40,24 +43,14 @@ function acceptInput(letter){
 }
 
 function resetGame(){
+  lettersInWTG = [];
   currEntry = '';
-  let html = `
-    <div class="entry flex-visible">
-
-    </div>
-    <div class="letters">
-           
-    </div>
-  `;
-  document.querySelector('.container').innerHTML = html;
-  const lettersHTML = document.querySelector('.letters'); 
-  let displayLetters = randLettersDisplayArr();
-  console.log('still works!');
-  lettersHTML.innerHTML += lettersHtml(displayLetters);
-  console.log('still works!');
+  renderGame();
 };
 
 function renderGame(){
+  setGuessWord();
+  console.log(wordToGuess);
   let html = `
     <div class="entry flex-visible">
 
@@ -81,7 +74,6 @@ function renderGame(){
 function randizeArray(arr){
   let newArr = [];
   for(let i = 0; i < arr.length; i++){
-    console.log('still works 22!!');
     let currElem = arr[Math.floor(Math.random() * (arr.length))];
     let repeat = false;
     if(newArr.includes(currElem)){
@@ -95,7 +87,6 @@ function randizeArray(arr){
         repeat = false;
       }
     }
-    console.log(`still works 23!${i}! ${arr.length} then the array is ${arr}`);
     newArr.push(currElem);
   }
   return newArr;
@@ -115,14 +106,27 @@ function lettersHtml(lettersArray){
  let count = 0;
  
   let randedArray = randizeArray(lettersArray);
-  console.log('still works2!');
-  randedArray.forEach((letter)=>{
-    console.log('still works3!');
-    if((finalizedLetters.includes(letter)) && (randedArray.indexOf(letter)>=19)){
-      let indexToBeSwapped = Math.floor(Math.random() * 18);
-      randedArray = swapIndexPosition(randedArray, randedArray.indexOf(letter), indexToBeSwapped);
+  let lettersInWTGindexes = [];
+  finalizedLetters.forEach((letter)=>{
+    if(randedArray.indexOf(letter) <= 19){
+      lettersInWTGindexes.push(randedArray.indexOf(letter));
+      console.log(randedArray.indexOf(letter));
     }
   });
+  
+  randedArray.forEach((letter)=>{
+    if((finalizedLetters.includes(letter)) && (randedArray.indexOf(letter)>=19)){
+      console.log(`current randedArray is: ${randedArray}`);
+      let indexToBeSwapped = Math.floor(Math.random() * 18);
+      while(lettersInWTGindexes.includes(indexToBeSwapped)){
+        indexToBeSwapped = Math.floor(Math.random() * 18);
+        console.log(indexToBeSwapped);
+      }
+      randedArray = swapIndexPosition(randedArray, randedArray.indexOf(letter), indexToBeSwapped);
+      console.log(`current randedArray is: ${randedArray}`);
+    }
+  });
+  
   randedArray.forEach((letter) => {
   while(count <= 19){
     html += `
@@ -138,7 +142,7 @@ function lettersHtml(lettersArray){
 }
 
 function randInt(start, finish){
-  return Math.random() *(finish - start) + start;
+  return Math.floor(Math.random() * (finish - start)) + start;
 }
 
 function randLettersDisplayArr(){
@@ -154,7 +158,6 @@ function randLettersDisplayArr(){
     }
     if(found == false){
       newArr.push(letter);
-      console.log(newArr);
     }
     found = false;
   });
@@ -179,4 +182,9 @@ function getValidLetters(){
   console.log(`The new letterInWTG is ${lettersInWTG}`);
   
   finalizedLetters = lettersInWTG.filter(num => num !="");
+}
+
+function setGuessWord(){
+  wordToGuess = guessWords[randInt(0, guessWords.length)];
+  console.log(wordToGuess);
 }
