@@ -39,6 +39,7 @@
   height: 12vh;
   border-radius: 4vh;
   border: none;
+  font-size:3em;
 
   &:hover{
     background-color: var(--buttonColor2);
