@@ -4,7 +4,6 @@ let currEntry = '';
 const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 let lettersInWTG =[];
 let finalizedLetters = [];
-console.log(wordToGuess);
 renderGame();
 
 
@@ -21,11 +20,12 @@ function acceptInput(letter){
   if(letter == wordToGuess[currEntry.length]){
     currEntry += letter;
     if(currEntry.length == wordToGuess.length){
-      console.log('congrats, you got the word!!');
+       ('congrats, you got the word!!');
 
       document.querySelectorAll('.letter').forEach((button) => {
         button.style.pointerEvents = 'none';
       });
+      congratulate();
       setTimeout(()=> {
         document.querySelectorAll('.letter').forEach((button) => {
           button.style.pointerEvents = 'auto';
@@ -36,7 +36,6 @@ function acceptInput(letter){
       }, 2000);
     }
     generateInput(letter);
-    console.log(currEntry);
   } else{
     console.log('Incorrect input');
   }
@@ -50,7 +49,6 @@ function resetGame(){
 
 function renderGame(){
   setGuessWord();
-  console.log(wordToGuess);
   let html = `
     <div class="entry flex-visible">
 
@@ -110,20 +108,16 @@ function lettersHtml(lettersArray){
   finalizedLetters.forEach((letter)=>{
     if(randedArray.indexOf(letter) <= 19){
       lettersInWTGindexes.push(randedArray.indexOf(letter));
-      console.log(randedArray.indexOf(letter));
     }
   });
   
   randedArray.forEach((letter)=>{
     if((finalizedLetters.includes(letter)) && (randedArray.indexOf(letter)>=19)){
-      console.log(`current randedArray is: ${randedArray}`);
       let indexToBeSwapped = Math.floor(Math.random() * 18);
       while(lettersInWTGindexes.includes(indexToBeSwapped)){
         indexToBeSwapped = Math.floor(Math.random() * 18);
-        console.log(indexToBeSwapped);
       }
       randedArray = swapIndexPosition(randedArray, randedArray.indexOf(letter), indexToBeSwapped);
-      console.log(`current randedArray is: ${randedArray}`);
     }
   });
   
@@ -179,12 +173,59 @@ function getValidLetters(){
     found = false;
     count = 0;
   });
-  console.log(`The new letterInWTG is ${lettersInWTG}`);
-  
   finalizedLetters = lettersInWTG.filter(num => num !="");
 }
 
 function setGuessWord(){
   wordToGuess = guessWords[randInt(0, guessWords.length)];
-  console.log(wordToGuess);
+}
+
+function congratulate() {
+  console.log("Congrats, you got it!");
+
+  const confettiWrapper = document.querySelector(".confetti-wrapper");
+  if (!confettiWrapper) {
+    console.warn("Confetti wrapper not found.");
+    return;
+  }
+
+  // Generate confetti
+  for (let i = 0; i < 140; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti-piece");
+    confetti.style.left = `${Math.random() * 100}%`;
+
+    const fallDur = Math.random() * 3 + 3; // Duration between 3s and 6s
+    confetti.dataset.id = i; // Set dataset id
+
+    confetti.style.setProperty("--fall-duration", `${fallDur}s`);
+    confetti.style.setProperty("--confetti-color", getRandomColor());
+
+    confettiWrapper.appendChild(confetti);
+
+    // Ensure the correct `i` value is passed to setTimeout by using a closure
+    setTimeout((confettiId) => {
+      removeNthInstance(".confetti-piece", confettiId);
+    }, fallDur * 1000, i);
+  }
+}
+
+function removeNthInstance(selector, n) {
+  let elements = Array.from(document.querySelectorAll(selector)); // Convert NodeList to array
+  console.log(`Elements before removal: ${elements.length}`);
+
+  let targetElement = elements.find(ele => Number(ele.dataset.id) === n);
+
+  if (targetElement) {
+    targetElement.remove(); // Remove from DOM
+    console.log(`Removed confetti with dataset id: ${n}`);
+  } else {
+    console.warn(`No confetti piece found with dataset id: ${n}`);
+  }
+}
+
+// Helper function to generate a random color
+function getRandomColor() {
+  const colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff"];
+  return colors[Math.floor(Math.random() * colors.length)];
 }
