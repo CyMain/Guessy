@@ -21,17 +21,27 @@
       font-size: 6vw;
     }
 
-    button{
+    .name-warning{
+      color:rgb(255, 94, 94);
+      font-weight: bold;
+      font-size:3vw;
+      margin: 0;
+      padding: 0;
+      display: none;
+    }
+
+    .name-submit{
       background-color: var(--buttonColor2);
       border: none;
       font-size: 2em;
       padding: 0.8vh 20vw;
       border-radius: 2em;
+      color:var(--font-color1);
     }
 
-    button:hover{
+    .name-submit:hover{
       background-color: var(--buttonColor2);
-    }
+    }    
 
     input{
       width: 50vw;

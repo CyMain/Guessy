@@ -21,6 +21,12 @@
   right: 1vw;
 }
 
+.hint-button img{
+  object-fit: cover;
+  height: 6vh;
+  width: 6vh;
+}
+
 .mobile-hint-container{
   width:100vw;
   height:100vh;

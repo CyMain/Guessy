@@ -7,17 +7,28 @@ function renderIntro(){
   <section class="welcome fade-in-out flex-visible">Welcome To Guessy!</section>
     <form class="invisible fade-in" method="dialog">
       <label for="username">What's your name?</label>
-      <input name="username" id="username" placeholder="Enter your name(Mike, Sonic, John Cena...)">
-      <button onclick='
+      <input autocomplete="off" type="text" maxlength="20" name="username" id="username" pattern="[^ ]+" placeholder="Enter your name(Mike, Sonic, John Cena...)">
+      <p class="name-warning">
+        That character isn't allowed~
+      </p>
+      <input value="Done" type="submit" class="name-submit" onclick='
         acceptName();
-      '>Done</button>
+      '>
     </form>
     <section class="greeting invisible fade-in">Greetings [insert name]!!</section>
   `;
 
   document.querySelector('.UI-container').innerHTML = html;
-
-  document.querySelector('button').addEventListener('click', ()=>{
+  document.getElementById('username').addEventListener('keydown', function(event){
+    const forbiddenChars = ['@', '#', '$', '%', '^', '&', '*', '!', '(', ')', '/', '\\', '.', ',', ';', ':', '[', ']',  '|', '`', '~', '-', '+', '=', "'", ">", "<", "{", "}", "?", '"'];
+    if(forbiddenChars.includes(event.key) || ((event.key === " ") && (this.value.length === 0))){
+      event.preventDefault();
+      let nameWarning = document.querySelector('.name-warning');
+      nameWarning.innerHTML = `That character isn't allowed~`;
+      nameWarning.style.display='flex';
+    };
+  })
+  document.querySelector('.name-submit').addEventListener('click', ()=>{
     acceptName();
   })
 
@@ -34,7 +45,8 @@ function acceptName(){
   const greeting = document.querySelector('.greeting');
   const form = document.querySelector('form');
   let sName = document.querySelector('input').value;
-  greeting.innerHTML = `Greetings ${sName}`;
+  if(sName != ''){
+    greeting.innerHTML = `Greetings, ${sName}`;
   form.classList.add('invisible');
   form.classList.remove('flex-visible');
   greeting.classList.add('flex-visible');
@@ -43,4 +55,9 @@ function acceptName(){
     window.location = "./guessy.html";
   }, 4100)
   uName = sName;
+  } else {
+    let nameWarning = document.querySelector('.name-warning');
+    nameWarning.innerHTML = `Please enter a name.`
+    nameWarning.style.display='flex';
+  }
 }

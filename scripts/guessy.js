@@ -26,9 +26,19 @@ let currEntry = '';
 const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 let lettersInWTG =[];
 let finalizedLetters = [];
+let mobileHintOpen = true;
 renderGame();
 
+function alterMobileHint(){
+  if(mobileHintOpen ==true){
+    document.querySelector('.mobile-hint-contaner').style.display = "none";
+    mobileHintOpen = false;
+  } else{
+    document.querySelector('.mobile-hint-contaner').style.display = "flex";
+    mobileHintOpen = true;
+  }
 
+}
 
 function generateInput(letter){
   document.querySelector('.entry').innerHTML += `
@@ -89,6 +99,9 @@ function renderGame(){
       acceptInput(button.innerText);
     })
   });
+  document.querySelector('.hint-button').addEventListener('click', ()=>{
+    alterMobileHint();
+  })
   hintHTML();
 }
 
