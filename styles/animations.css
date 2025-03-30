@@ -35,3 +35,19 @@
     opacity: 0;
   }
 }
+
+@keyframes dance {
+  25%{
+    transform: rotate(-5deg);
+  }
+
+  75%{
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes floating {
+  50%{
+    transform: translateY(1vh);
+  }
+}

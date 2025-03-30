@@ -22,7 +22,7 @@
     }
 
     button{
-      background-color: #030f0f;
+      background-color: var(--buttonColor2);
       border: none;
       font-size: 2em;
       padding: 0.8vh 20vw;
@@ -30,7 +30,7 @@
     }
 
     button:hover{
-      background-color: #082929;
+      background-color: var(--buttonColor2);
     }
 
     input{
@@ -39,10 +39,12 @@
       border-radius: 4em;
       border: none;
       color: #030f0f;
+
+      &::placeholder{
+        font-size: 2.2vw;
+      }
     }
 
-    input::placeholder{
-      font-size: 2.2vw;
-    }
+    
   }
 }

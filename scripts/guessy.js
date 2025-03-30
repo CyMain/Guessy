@@ -1,5 +1,27 @@
-const guessWords = ['SONIC', 'CHARA', 'CYRUS', 'DIPPER'];
+const guessWords = [{
+  word:'Sonic',
+  hint:'The Fastest Thing Alive! Or the blue Blur'
+}, {
+  word:'Chara', 
+  hint:'The First Human to fall into the Underground.'
+}, {
+  word:'Dipper',
+  hint:`"The Pines Boy"`
+}, {
+  word: 'Cyrus',
+  hint: 'The creator of this site'
+},{
+  word: "Frisk",
+  hint:"The saviour of the undeground"
+
+},
+{
+  word: "Link",
+  hint: "the hero of time"
+}
+]
 let wordToGuess = '';
+let currHint = '';
 let currEntry = '';
 const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 let lettersInWTG =[];
@@ -67,6 +89,7 @@ function renderGame(){
       acceptInput(button.innerText);
     })
   });
+  hintHTML();
 }
 
 function randizeArray(arr){
@@ -177,7 +200,9 @@ function getValidLetters(){
 }
 
 function setGuessWord(){
-  wordToGuess = guessWords[randInt(0, guessWords.length)];
+  let wordObject = guessWords[randInt(0, guessWords.length)];
+  wordToGuess = wordObject.word.toUpperCase();
+  currHint = wordObject.hint;
 }
 
 function congratulate() {
@@ -206,7 +231,7 @@ function congratulate() {
     // Ensure the correct `i` value is passed to setTimeout by using a closure
     setTimeout((confettiId) => {
       removeNthInstance(".confetti-piece", confettiId);
-    }, fallDur * 1000, i);
+    }, fallDur * 1000 - 200, i);
   }
 }
 
@@ -228,4 +253,14 @@ function removeNthInstance(selector, n) {
 function getRandomColor() {
   const colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff"];
   return colors[Math.floor(Math.random() * colors.length)];
+}
+
+
+function hintHTML (){
+  let html = `
+    Hint: <span class="act-hint">${currHint}</span>
+    `;
+  document.querySelectorAll('.hint').forEach((hint) =>{
+    hint.innerHTML = html;
+  })
 }

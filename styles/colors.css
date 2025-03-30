@@ -1,10 +1,10 @@
 :root{
-  --mainColor1: #03624c;
-  --mainColor2: #023126;
-  --subColor1: #024838;
-  --subColor2: #061d19;
+  --mainColor1: #36008d;
+  --mainColor2: #22084d;
+  --subColor1: #2b0a5f;
+  --subColor2: #000000;
   --fontColor1: whitesmoke;
-  --buttonColor1: #082929;
-  --buttonColor2: #030f0f;
-  --buttonColor3:#0e5454;
+  --buttonColor1: #160829;
+  --buttonColor2: #00032c;
+  --buttonColor3:#e0e0e0;
 }

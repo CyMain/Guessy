@@ -41,6 +41,6 @@ function acceptName(){
   greeting.classList.remove('invisible');
   setTimeout(() => {
     window.location = "./guessy.html";
-  }, 4000)
+  }, 4100)
   uName = sName;
 }
