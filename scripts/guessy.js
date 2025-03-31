@@ -1,23 +1,18 @@
 const guessWords = [{
   word:'Sonic',
-  hint:'The Fastest Thing Alive! Or the blue Blur'
+  hint:'The Fastest Thing Alive!'
 }, {
-  word:'Chara', 
-  hint:'The First Human to fall into the Underground.'
+  word:'Chair', 
+  hint:'Something to sit on.'
 }, {
-  word:'Dipper',
-  hint:`"The Pines Boy"`
+  word:'Ice Cream',
+  hint:`I scream, you scream, we all scream for...`
 }, {
   word: 'Cyrus',
   hint: 'The creator of this site'
 },{
-  word: "Frisk",
-  hint:"The saviour of the undeground"
-
-},
-{
-  word: "Link",
-  hint: "the hero of time"
+  word: "Sun",
+  hint:"A big ball of fire in the sky."
 }
 ]
 let wordToGuess = '';
