@@ -19,6 +19,11 @@
   position: absolute;
   top: 1vh;
   right: 1vw;
+  z-index: 101;
+
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 .hint-button img{
@@ -35,6 +40,7 @@
   align-items: center;
   justify-content: center;
   padding: 10vh 0;
+  z-index: 100;
 }
 
 .mobile-hint-container > .hint-container{

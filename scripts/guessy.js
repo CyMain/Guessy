@@ -26,16 +26,18 @@ let currEntry = '';
 const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 let lettersInWTG =[];
 let finalizedLetters = [];
-let mobileHintOpen = true;
+let mobileHintOpen = false;
 renderGame();
 
 function alterMobileHint(){
   if(mobileHintOpen ==true){
-    document.querySelector('.mobile-hint-contaner').style.display = "none";
+    document.querySelector('.mobile-hint-container').style.display = "none";
     mobileHintOpen = false;
+    document.querySelector('.hint-button-img').src ="./assets/images/icons/question-mark-cartoony-icon.png";
   } else{
-    document.querySelector('.mobile-hint-contaner').style.display = "flex";
+    document.querySelector('.mobile-hint-container').style.display = "flex";
     mobileHintOpen = true;
+    document.querySelector('.hint-button-img').src ="./assets/images/icons/close-cartoony-icon.png";
   }
 
 }
@@ -103,6 +105,15 @@ function renderGame(){
     alterMobileHint();
   })
   hintHTML();
+
+  window.addEventListener("resize", () => {
+    if(mobileHintOpen == true){
+      alterMobileHint();  
+    }
+  })
+  if(window.matchMedia("(max-width: 600px)").matches){
+    alterMobileHint();  
+  }
 }
 
 function randizeArray(arr){
