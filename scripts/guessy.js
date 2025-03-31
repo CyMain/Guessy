@@ -5,7 +5,7 @@ const guessWords = [{
   word:'Chair', 
   hint:'Something to sit on.'
 }, {
-  word:'Ice Cream',
+  word:'IceCream',
   hint:`I scream, you scream, we all scream for...`
 }, {
   word: 'Cyrus',
@@ -127,24 +127,10 @@ function renderGame(){
 }
 
 function randizeArray(arr){
-  let newArr = [];
-  for(let i = 0; i < arr.length; i++){
-    let currElem = arr[Math.floor(Math.random() * (arr.length))];
-    let repeat = false;
-    if(newArr.includes(currElem)){
-      repeat = true;
-    }
-    while(repeat == true){
-      if(newArr.includes(currElem)){
-        repeat = true;
-        currElem = arr[Math.floor(Math.random() * (arr.length))];
-      } else {
-        repeat = false;
-      }
-    }
-    newArr.push(currElem);
+  for (let i = arr.length - 1; i > 0; i--){
+    let j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  return newArr;
 }
 
 function swapIndexPosition(arr, index1, index2){
@@ -155,38 +141,38 @@ function swapIndexPosition(arr, index1, index2){
 }
 
 function lettersHtml(lettersArray){
- let html = `
-  
- `;
- let count = 0;
- 
-  let randedArray = randizeArray(lettersArray);
-  let lettersInWTGindexes = [];
-  finalizedLetters.forEach((letter)=>{
-    if(randedArray.indexOf(letter) <= 19){
-      lettersInWTGindexes.push(randedArray.indexOf(letter));
-    }
-  });
-  
-  randedArray.forEach((letter)=>{
-    if((finalizedLetters.includes(letter)) && (randedArray.indexOf(letter)>=19)){
-      let indexToBeSwapped = Math.floor(Math.random() * 19);
-      while(lettersInWTGindexes.includes(indexToBeSwapped)){
-        indexToBeSwapped = Math.floor(Math.random() * 19);
+  let html = `
+    
+  `;
+  let count = 0;
+
+  finalizedLetters = [...new Set(lettersArray)];
+  let insertedIndexes = new Set();
+
+  finalizedLetters.forEach((element) =>{
+    for(let i = 0; i < 20; i++){
+      if(!insertedIndexes.has(i)){
+        lettersArray[i] = element;
+        insertedIndexes.add(i);
+        break;
       }
-      randedArray = swapIndexPosition(randedArray, randedArray.indexOf(letter), indexToBeSwapped);
     }
-  });
-  
-  randedArray.forEach((letter) => {
-  while(count <= 19){
-    html += `
-      <button class="letter">
-        ${letter.toUpperCase()}
-      </button> 
-    `;
-    count++;
-    break;
+  })
+
+  let firstPart = lettersArray.slice(0, 20);
+  randizeArray(firstPart);
+  lettersArray.splice(0, 20, ...firstPart);
+
+  randizeArray(lettersArray.slice(0, 20));
+  lettersArray.forEach((letter) => {
+    while(count <= 19){
+      html += `
+        <button class="letter">
+          ${letter.toUpperCase()}
+        </button> 
+      `;
+      count++;
+      break;
   }
  });
  return html;
@@ -238,12 +224,14 @@ function setGuessWord(){
     usedWords = [];
   }
   let wordObject = guessWords[randInt(0, guessWords.length)];
-  while(usedWords.includes(wordObject.word)){
-    wordObject = guessWords[randInt(0, guessWords.length)];
+  if(usedWords.includes(wordObject.word)){
+    while(usedWords.includes(wordObject.word)){
+      wordObject = guessWords[randInt(0, guessWords.length)];
+    }
   }
   wordToGuess = wordObject.word.toUpperCase();
   currHint = wordObject.hint;
-  usedWords.push(wordToGuess);
+  usedWords.push(wordObject.word);
 }
 
 function congratulate() {
@@ -298,4 +286,8 @@ function hintHTML (){
   document.querySelectorAll('.hint').forEach((hint) =>{
     hint.innerHTML = html;
   })
+}
+
+function endGame(){
+  
 }
