@@ -162,9 +162,9 @@ function lettersHtml(lettersArray){
   
   randedArray.forEach((letter)=>{
     if((finalizedLetters.includes(letter)) && (randedArray.indexOf(letter)>=19)){
-      let indexToBeSwapped = Math.floor(Math.random() * 18);
+      let indexToBeSwapped = Math.floor(Math.random() * 19);
       while(lettersInWTGindexes.includes(indexToBeSwapped)){
-        indexToBeSwapped = Math.floor(Math.random() * 18);
+        indexToBeSwapped = Math.floor(Math.random() * 19);
       }
       randedArray = swapIndexPosition(randedArray, randedArray.indexOf(letter), indexToBeSwapped);
     }
