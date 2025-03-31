@@ -30,15 +30,18 @@ let mobileHintOpen = false;
 renderGame();
 
 function alterMobileHint(){
-  if(mobileHintOpen ==true){
+  if(mobileHintOpen == true){
     document.querySelector('.mobile-hint-container').style.display = "none";
     mobileHintOpen = false;
+    console.log('successful removal of hint container.');
     document.querySelector('.hint-button-img').src ="./assets/images/icons/question-mark-cartoony-icon.png";
   } else{
     document.querySelector('.mobile-hint-container').style.display = "flex";
     mobileHintOpen = true;
+    console.log('successful addition of hint container.');
     document.querySelector('.hint-button-img').src ="./assets/images/icons/close-cartoony-icon.png";
   }
+  console.log(mobileHintOpen);
 
 }
 
@@ -101,13 +104,12 @@ function renderGame(){
       acceptInput(button.innerText);
     })
   });
-  document.querySelector('.hint-button').addEventListener('click', ()=>{
-    alterMobileHint();
-  })
+  document.querySelector('.hint-button').removeEventListener('click',alterMobileHint);
+  document.querySelector('.hint-button').addEventListener('click', alterMobileHint);
   hintHTML();
 
   window.addEventListener("resize", () => {
-    if(mobileHintOpen == true){
+    if(mobileHintOpen == true && window.matchMedia("(min-width: 600.5px)").matches){
       alterMobileHint();  
     }
   })
@@ -230,8 +232,6 @@ function setGuessWord(){
 }
 
 function congratulate() {
-  console.log("Congrats, you got it!");
-
   const confettiWrapper = document.querySelector(".confetti-wrapper");
   if (!confettiWrapper) {
     console.warn("Confetti wrapper not found.");
@@ -261,24 +261,20 @@ function congratulate() {
 
 function removeNthInstance(selector, n) {
   let elements = Array.from(document.querySelectorAll(selector)); // Convert NodeList to array
-  console.log(`Elements before removal: ${elements.length}`);
 
   let targetElement = elements.find(ele => Number(ele.dataset.id) === n);
 
   if (targetElement) {
     targetElement.remove(); // Remove from DOM
-    console.log(`Removed confetti with dataset id: ${n}`);
   } else {
     console.warn(`No confetti piece found with dataset id: ${n}`);
   }
 }
 
-// Helper function to generate a random color
 function getRandomColor() {
   const colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff"];
   return colors[Math.floor(Math.random() * colors.length)];
 }
-
 
 function hintHTML (){
   let html = `
