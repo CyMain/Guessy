@@ -27,6 +27,7 @@ const guessWords = [{
   hint:"A four-wheeled machine that beeps when others drive badly(not you, of course)."
 }
 ]
+let usedWords = [];
 let wordToGuess = '';
 let currHint = '';
 let currEntry = '';
@@ -233,9 +234,16 @@ function getValidLetters(){
 }
 
 function setGuessWord(){
+  if(usedWords.length == guessWords.length){
+    usedWords = [];
+  }
   let wordObject = guessWords[randInt(0, guessWords.length)];
+  while(usedWords.includes(wordObject.word)){
+    wordObject = guessWords[randInt(0, guessWords.length)];
+  }
   wordToGuess = wordObject.word.toUpperCase();
   currHint = wordObject.hint;
+  usedWords.push(wordToGuess);
 }
 
 function congratulate() {
