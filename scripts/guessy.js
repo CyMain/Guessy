@@ -13,6 +13,18 @@ const guessWords = [{
 },{
   word: "Sun",
   hint:"A big ball of fire in the sky."
+},{
+  word: "Dog",
+  hint:"A man's best friend."
+},{
+  word: "Fish",
+  hint:"Sea creature that always looks surprised"
+},{
+  word: "Book",
+  hint:"Has two covers... Lots of pages... Some people pretend to read it?"
+},{
+  word: "Car",
+  hint:"A four-wheeled machine that beeps when others drive badly(not you, of course)."
 }
 ]
 let wordToGuess = '';
