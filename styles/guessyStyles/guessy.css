@@ -13,6 +13,14 @@
     border-radius: 20px;
     background-color: var(--mainColor2);
   }
+
+  .understood-button{
+    background-color: var(--buttonColor2);
+    border: none;
+    border-radius: 20px;
+    padding: 1vw 2vw;
+    color: whitesmoke;
+  }
 }
 
 .main-game{
