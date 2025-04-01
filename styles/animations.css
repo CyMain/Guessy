@@ -54,34 +54,34 @@
 
 @keyframes bounce-out-left{
   20%{
-    scale: 150%;
+    scale: 4;
     transform: rotate(-30deg);
   }
 
   60%{
-    scale: 150%;
+    scale: 4;
     transform: rotate(-30deg);
   }
 }
 
 @keyframes bounce-out-right{
   20%{
-    scale: 150%;
+    scale: 4;
     transform: rotate(30deg);
   }
 
   60%{
-    scale: 150%;
+    scale: 4;
     transform: rotate(30deg);
   }
 }
 
 @keyframes bounce-out{
   20%{
-    scale: 150%;
+    scale: 4;
   }
 
   60%{
-    scale: 150%;
+    scale: 4;
   }
 }

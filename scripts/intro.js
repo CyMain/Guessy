@@ -1,6 +1,27 @@
+import { storeUserName } from "./data/data.js";
+
 renderIntro();
 
-let uName;
+function acceptName(){
+  const greeting = document.querySelector('.greeting');
+  const form = document.querySelector('form');
+  let sName = document.querySelector('input').value;
+  if(sName != ''){
+    greeting.innerHTML = `Greetings, ${sName}`;
+  form.classList.add('invisible');
+  form.classList.remove('flex-visible');
+  greeting.classList.add('flex-visible');
+  greeting.classList.remove('invisible');
+  setTimeout(() => {
+    window.location = "./guessy.html";
+  }, 4100)
+  storeUserName(sName);
+  } else {
+    let nameWarning = document.querySelector('.name-warning');
+    nameWarning.innerHTML = `Please enter a name.`
+    nameWarning.style.display='flex';
+  }
+}
 
 function renderIntro(){
   let html = `
@@ -11,9 +32,7 @@ function renderIntro(){
       <p class="name-warning">
         That character isn't allowed~
       </p>
-      <input value="Done" type="submit" class="name-submit" onclick='
-        acceptName();
-      '>
+      <input value="Done" type="submit" class="name-submit">
     </form>
     <section class="greeting invisible fade-in">Greetings [insert name]!!</section>
   `;
@@ -41,23 +60,3 @@ function renderIntro(){
 
 }
 
-function acceptName(){
-  const greeting = document.querySelector('.greeting');
-  const form = document.querySelector('form');
-  let sName = document.querySelector('input').value;
-  if(sName != ''){
-    greeting.innerHTML = `Greetings, ${sName}`;
-  form.classList.add('invisible');
-  form.classList.remove('flex-visible');
-  greeting.classList.add('flex-visible');
-  greeting.classList.remove('invisible');
-  setTimeout(() => {
-    window.location = "./guessy.html";
-  }, 4100)
-  uName = sName;
-  } else {
-    let nameWarning = document.querySelector('.name-warning');
-    nameWarning.innerHTML = `Please enter a name.`
-    nameWarning.style.display='flex';
-  }
-}

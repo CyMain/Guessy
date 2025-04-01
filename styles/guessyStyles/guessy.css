@@ -1,5 +1,11 @@
+.rules{
+  position: absolute;
+  width: 100vw;
+  height: 100dvh;
+}
+
 .main-game{
-  display: flex;
+  display: none;
   position: relative;
   align-items: center;
   justify-content: center;
@@ -188,7 +194,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 10vw;
+  font-size: clamp(20px, 10vw, 200px);
 
   .score-display{
     
@@ -199,6 +205,17 @@
 
   .player-score{
     color: red;
+  }
+
+  .try-again{
+    background-color: var(--buttonColor1);
+    border: none;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+    font-size: clamp(20px, 10vw, 200px);
+    padding: 2vh 20vw;
+    min-width: 100px;
+    min-height: 40px;
   }
 }
 

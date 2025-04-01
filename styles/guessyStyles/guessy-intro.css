@@ -8,7 +8,8 @@
     width: 100vw;
     height: clamp(360px, 100dvh, 1900px);
     overflow: hidden;
-    position: relative;
+    position: fixed;
+    transform-origin: center;
     animation: bounce-out 1s ease-in-out;
 
     .black-bar{
@@ -19,17 +20,19 @@
 
     .intro-stage{
         place-content: center;
+        place-items: center;
         height: clamp(100px, 10%, 200px);
         width: 100%;
-        background-color: green;
         font-size: clamp(20px, 10vw, 50px);
-        position:absolute;
+        position:fixed;
         top:45%;
         z-index: 200;
 
         .stage{
             width: 100%;
+            white-space: nowrap;
             text-align: right;
+            text-overflow: ellipsis;
             transition: all 1s ease-in-out;
         }
     }

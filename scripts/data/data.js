@@ -1,3 +1,11 @@
-import uName from "../intro.js";
+let userName;
 
-export let username = uName;
+export function storeUserName(name){
+    userName = name;
+    console.log(userName);
+}
+
+export function getUserName(){
+    console.log(userName);
+    return userName;
+}

@@ -1,3 +1,5 @@
+import { getUserName } from './data/data.js';
+
 const guessWords = [{
   word:'Sonic',
   hint:'The Fastest Thing Alive!'
@@ -27,9 +29,11 @@ const guessWords = [{
   hint:"A four-wheeled machine that beeps when others drive badly(not you, of course)."
 }
 ]
+const pName = getUserName() || 'Player'
+let playerName = pName;
 let gameScore = 0;
 let gameTimeID;
-let timer = 5;
+let timer;
 let usedWords = [];
 let wordToGuess = '';
 let currHint = '';
@@ -40,33 +44,51 @@ let finalizedLetters = [];
 let mobileHintOpen = false;
 renderSite();
 
-function gameIntro(){
+function gameIntro(){console.log('1');
   const mainGame = document.querySelector('.main-game');
   const stageTag = document.querySelector('.intro-stage');
   const stageTagText = document.querySelector('.stage');
   const intro = document.querySelector('.game-intro');
-  console.log(intro);
   const stages = ['ready', 'set', 'go!!'];
-  mainGame.style.display= 'none';
-  stageTagText.textContent = `Alright Cardan...`;
+  stageTag.style.backgroundColor = 'green';
+  stageTagText.style.textAlign = 'right';
+  stageTagText.style.opacity = '0';
+  stageTagText.textContent = `Alright ${playerName}...`;
   setTimeout(()=>{
-    setTimeout(()=>{
-      stageTagText.style.transform = 'translateX(-50%)';
+    stageTagText.style.opacity = '1';
+    stageTagText.style.transform = 'translateX(-25%)';
+    intro.style.display = 'flex';
+    setTimeout(()=>{      
       for(let i = 0; i < stages.length; i++){
         setTimeout(()=>{
           stageTagText.textContent = stages[i].toUpperCase();
           if(i == 0){
+            stageTagText.style.textAlign = 'left';
+            stageTagText.style.transform = 'translateX(45%)';
+            stageTag.style.backgroundColor = "green";
             intro.style.animation = 'bounce-out-left 1s ease-in-out';
           }else if(i===1){
+            stageTagText.style.textAlign = 'right';
+            stageTagText.style.transform = 'translateX(-48%)';
+            stageTag.style.backgroundColor = "orange";
             intro.style.animation = 'bounce-out-right 1s ease-in-out';
           }else if(i===2){
+            stageTagText.style.textAlign = 'left';
+            stageTagText.style.transform = 'translateX(45%)';
+            stageTag.style.backgroundColor = "var(--mainColor1)";
             intro.style.animation = 'bounce-out 1s ease-in-out';
             setTimeout(()=>{
               intro.style.animation = 'fade-out 0.2s ease-in-out';
               setTimeout(()=>{
                 intro.style.display = 'none';
-                mainGame.style.display='flex';
+                console.log('end of 1');
                 renderGame();
+                startGame();
+                stageTagText.style.transform = 'none';
+                stageTagText.style.transform = 'none';
+                stageTagText.style.transform = 'none';
+                stageTagText.style.transform = 'none';
+                
               }, 200)
             }, 1000);
             
@@ -74,18 +96,35 @@ function gameIntro(){
         }, 1000 * i);
       }
     }, 2000);
-    intro.style.display = 'flex';
-    stageTagText.style.transform = 'translateX(-50%)';
+    
   }, 1000)
   
   
 }
 
+function tryAgain(){
+  console.log('try again clicked.');
+  document.querySelector('.try-again').style.pointerEvents = 'none';
+  document.querySelector('.end-game').style.animation='fade-out 2s ease-in-out';
+  setTimeout(()=>{
+    document.querySelector('.end-game').style.animation='none';
+    document.querySelector('.end-game').style.display='none';
+    setTimeout(()=>{
+      resetGame();
+      gameIntro();
+    }, 2000);
+  }, 2000);
+  
+}
+
 function startGame(){
+  console.log('3');
+  timer = 10;
   if(!gameTimeID){
     gameTimeID = setInterval(()=>{
       timer-=1;
       if(timer <= 0){
+        console.log('end of 3');
         endGame();
       }
       let timeTag = document.querySelector('.time');
@@ -127,8 +166,8 @@ function generateInput(letter){
 function acceptInput(letter){
   if(letter == wordToGuess[currEntry.length]){
     currEntry += letter;
-    gameScore += 100;
     if(currEntry.length == wordToGuess.length){
+      gameScore += 150;
       document.querySelectorAll('.letter').forEach((button) => {
         button.style.pointerEvents = 'none';
       });
@@ -139,7 +178,7 @@ function acceptInput(letter){
         });
       }, 3000);
       setTimeout(()=> {
-        resetGame();
+        refreshGame();
       }, 2000);
     }
     generateInput(letter);
@@ -155,10 +194,51 @@ function acceptInput(letter){
 function resetGame(){
   lettersInWTG = [];
   currEntry = '';
+};
+
+function refreshGame(){
+  lettersInWTG = [];
+  currEntry = '';
   renderGame();
 };
 
 function renderSite(){
+  const html = `
+    <div class = "rules">Rules:
+      <ul>
+        <li>
+          <p>
+            You're given 1 minute to guess as many words as you can.
+          </p>
+        </li>
+        <li>
+          <p>
+            You will be judged at the end of the game for the points you've accumulated.
+          </p>
+        </li>
+        <li>
+          <p>
+            Game Ends when the time stops.
+          </p>
+        </li>
+        <li>
+          <p>
+            Points are deducted for each incorrect letter.
+          </p>
+        </li>
+      </ul>
+      <button class="understood-button">
+        Understood
+      </button>
+    </div>
+  `;
+  document.querySelector('main').innerHTML += html;
+  document.querySelector('.understood-button').addEventListener('click', ()=>{
+    fullSiteRender();
+  })
+}
+
+function fullSiteRender(){
   const html = `
     <div class="main-game">
       <div class="confetti-wrapper">
@@ -173,10 +253,10 @@ function renderSite(){
       <div class="overall">
         <div class="score-and-timer">
           <div class="curr-score">
-            Score: <span class="score">0</span>
+            Score: <span class="score">${gameScore}</span>
           </div>
           <div class="timer">
-            Time Remaining: <span class="time">00:10</span>
+            Time Remaining: <span class="time">${timer}</span>
           </div>
         </div>
         <button class="hint-button">
@@ -202,6 +282,9 @@ function renderSite(){
       <div class="score-display">
         Your Score is: <span class="player-score">200</span>
       </div>
+      <button class="try-again">
+        Try Again
+      </button>
     </div>
     `;
   document.querySelector('main').innerHTML += html;
@@ -209,6 +292,9 @@ function renderSite(){
 }
 
 function renderGame(){
+  console.log('2');
+  document.querySelector('.main-game').style.display='flex';
+  document.querySelector('.try-again').onclick = tryAgain;
   setGuessWord();
   let html = `
     <div class="entry flex-visible">
@@ -237,11 +323,10 @@ function renderGame(){
       alterMobileHint();  
     }
   })
-  if(window.matchMedia("(max-width: 600px)").matches){
+  if(window.matchMedia("(max-width: 600px)").matches && mobileHintOpen == false){
     alterMobileHint();  
   }
-
-  startGame();
+  console.log('end of 2');
 }
 
 function randizeArray(arr){
@@ -407,7 +492,9 @@ function hintHTML (){
 }
 
 function endGame(){
+  console.log(4);
   clearInterval(gameTimeID);
+  gameTimeID = '';
   document.querySelectorAll('.letter').forEach((button) => {
     button.style.pointerEvents = 'none';
   });
@@ -426,18 +513,11 @@ function endGame(){
     endGameTag.style.display="flex";
     playerScore.textContent = `${gameScore}`;
     endGameTag.style.animation = 'fade-in 4s ease-in-out';
+    mainGame.style.animation = 'none';
     timer = 0;
-  gameScore = 0; 
+    gameScore = 0;
+    console.log('end of 4') ;
   }, 3000);
-  /*
-  <div class="end-game">
-      <div class="game-comment">
-        Congrats.
-      </div>
-      <div class="score-display">
-        Your Score is: <span class="player-score">200</span>
-      </div>
-    </div>*/
 }
 
 function commentGenerator(gameScore, endComment, playerScore){
