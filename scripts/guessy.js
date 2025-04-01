@@ -27,6 +27,9 @@ const guessWords = [{
   hint:"A four-wheeled machine that beeps when others drive badly(not you, of course)."
 }
 ]
+let gameScore = 0;
+let gameTimeID;
+let timer = 5;
 let usedWords = [];
 let wordToGuess = '';
 let currHint = '';
@@ -35,7 +38,67 @@ const alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', '
 let lettersInWTG =[];
 let finalizedLetters = [];
 let mobileHintOpen = false;
-renderGame();
+renderSite();
+
+function gameIntro(){
+  const mainGame = document.querySelector('.main-game');
+  const stageTag = document.querySelector('.intro-stage');
+  const stageTagText = document.querySelector('.stage');
+  const intro = document.querySelector('.game-intro');
+  console.log(intro);
+  const stages = ['ready', 'set', 'go!!'];
+  mainGame.style.display= 'none';
+  stageTagText.textContent = `Alright Cardan...`;
+  setTimeout(()=>{
+    setTimeout(()=>{
+      stageTagText.style.transform = 'translateX(-50%)';
+      for(let i = 0; i < stages.length; i++){
+        setTimeout(()=>{
+          stageTagText.textContent = stages[i].toUpperCase();
+          if(i == 0){
+            intro.style.animation = 'bounce-out-left 1s ease-in-out';
+          }else if(i===1){
+            intro.style.animation = 'bounce-out-right 1s ease-in-out';
+          }else if(i===2){
+            intro.style.animation = 'bounce-out 1s ease-in-out';
+            setTimeout(()=>{
+              intro.style.animation = 'fade-out 0.2s ease-in-out';
+              setTimeout(()=>{
+                intro.style.display = 'none';
+                mainGame.style.display='flex';
+                renderGame();
+              }, 200)
+            }, 1000);
+            
+          }
+        }, 1000 * i);
+      }
+    }, 2000);
+    intro.style.display = 'flex';
+    stageTagText.style.transform = 'translateX(-50%)';
+  }, 1000)
+  
+  
+}
+
+function startGame(){
+  if(!gameTimeID){
+    gameTimeID = setInterval(()=>{
+      timer-=1;
+      if(timer <= 0){
+        endGame();
+      }
+      let timeTag = document.querySelector('.time');
+      if(timeTag.style.color != 'whitesmoke' && timer>10){
+        timeTag.style.color ='whitesmoke'
+      } else if(timeTag.style.color != 'red' && timer<=10){
+        timeTag.style.color ='red';
+      }
+      let timeText= `${Math.floor(timer/60) > 0 ? Math.floor(timer/60) : 0}:${(timer % 60)>=10 ? timer%60 : '0'+(timer%60)}`;
+      timeTag.textContent=`${timeText}`;
+    }, 1000)
+  }
+}
 
 function alterMobileHint(){
   if(mobileHintOpen == true){
@@ -64,9 +127,8 @@ function generateInput(letter){
 function acceptInput(letter){
   if(letter == wordToGuess[currEntry.length]){
     currEntry += letter;
+    gameScore += 100;
     if(currEntry.length == wordToGuess.length){
-       ('congrats, you got the word!!');
-
       document.querySelectorAll('.letter').forEach((button) => {
         button.style.pointerEvents = 'none';
       });
@@ -82,8 +144,12 @@ function acceptInput(letter){
     }
     generateInput(letter);
   } else{
+    gameScore -= randInt(50, 60);
     console.log('Incorrect input');
   }
+  document.querySelectorAll('.score').forEach((score)=>{
+    score.textContent = gameScore;
+  })
 }
 
 function resetGame(){
@@ -91,6 +157,56 @@ function resetGame(){
   currEntry = '';
   renderGame();
 };
+
+function renderSite(){
+  const html = `
+    <div class="main-game">
+      <div class="confetti-wrapper">
+        <!-- Confetti elements will be created using CSS -->
+      </div>
+      <div class="mobile-hint-container">
+        <div class="hint-container">
+          <p class="hint">
+          </p>
+        </div>
+      </div>
+      <div class="overall">
+        <div class="score-and-timer">
+          <div class="curr-score">
+            Score: <span class="score">0</span>
+          </div>
+          <div class="timer">
+            Time Remaining: <span class="time">00:10</span>
+          </div>
+        </div>
+        <button class="hint-button">
+          <img class="hint-button-img" src="./assets/images/icons/question-mark-cartoony-icon.png" alt="show hint button.">
+        </button>
+        <div class="hint-container">
+          <p class="hint wide-screen">
+          </p>
+        </div>
+        <div class="container">
+      
+        </div>
+        <div class="hint-container">
+          <p class="hint wide-screen">
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="end-game">
+      <div class="game-comment">
+        Congrats.
+      </div>
+      <div class="score-display">
+        Your Score is: <span class="player-score">200</span>
+      </div>
+    </div>
+    `;
+  document.querySelector('main').innerHTML += html;
+  gameIntro();
+}
 
 function renderGame(){
   setGuessWord();
@@ -124,6 +240,8 @@ function renderGame(){
   if(window.matchMedia("(max-width: 600px)").matches){
     alterMobileHint();  
   }
+
+  startGame();
 }
 
 function randizeArray(arr){
@@ -289,5 +407,57 @@ function hintHTML (){
 }
 
 function endGame(){
-  
+  clearInterval(gameTimeID);
+  document.querySelectorAll('.letter').forEach((button) => {
+    button.style.pointerEvents = 'none';
+  });
+  let mainGame = document.querySelector('.main-game');
+  let endGameTag = document.querySelector('.end-game');
+  let endComment = document.querySelector('.game-comment');
+  let playerScore = document.querySelector('.player-score');
+  mainGame.style.animation = 'fade-out 2s ease-in-out';
+  commentGenerator(gameScore, endComment, playerScore);
+  setTimeout(()=>{
+    mainGame.style.display ='none';
+    console.log('main game gone')
+  }, 2000);
+  setTimeout(()=>{
+    console.log('end-game in.')
+    endGameTag.style.display="flex";
+    playerScore.textContent = `${gameScore}`;
+    endGameTag.style.animation = 'fade-in 4s ease-in-out';
+    timer = 0;
+  gameScore = 0; 
+  }, 3000);
+  /*
+  <div class="end-game">
+      <div class="game-comment">
+        Congrats.
+      </div>
+      <div class="score-display">
+        Your Score is: <span class="player-score">200</span>
+      </div>
+    </div>*/
+}
+
+function commentGenerator(gameScore, endComment, playerScore){
+  if(gameScore>1000){
+    endComment.textContent = `How'd you even get this!?`
+  }else if(gameScore>900){
+    endComment.textContent = `Congrats!`
+  }else if(gameScore>600){
+    endComment.textContent = `Not Bad.`
+  }else if(gameScore>=300){
+    endComment.textContent = `You can do better.`
+  }else{
+    endComment.textContent = `Just Terrible.`
+  }
+
+  if(gameScore>600){
+    playerScore.style.color = 'light-green';
+  } else if(gameScore>=300){
+    playerScore.style.color = 'orange';
+  }else{
+    playerScore.style.color = 'red';
+  }
 }

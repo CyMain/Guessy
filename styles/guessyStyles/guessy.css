@@ -1,153 +1,207 @@
-.hint-container{
-  max-width: 25vw;
-  font-weight: bold;
-  font-size: 2.5vw;
-  overflow: hidden;
-  border-radius: 40px;
-  padding: 5vh 0;
-}
-
-.act-hint{
-  font-weight: normal;
-}
-
-.hint-button{
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  top: 1vh;
-  right: 1vw;
-  z-index: 101;
-  overflow: hidden;
-
-  &:hover{
-    cursor: pointer;
-  }
-}
-
-.hint-button img{
-  object-fit: cover;
-  height: 6vh;
-  width: 6vh;
-}
-
-.mobile-hint-container{
-  width:100vw;
-  height:100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  padding: 10vh 0;
-  z-index: 100;
-}
-
-.mobile-hint-container > .hint-container{
-  text-align: left;
-  font-size: large;
-  padding: 3vw;
-  max-height: 80vh;
-  max-width: 30vw;
-  background-color: var(--mainColor2);
-}
-
-.mobile-hint-container .hint{
-  font-size:clamp(0.2em, 3vw, 2em);
-}
-
-.overall{
-  min-width: 350px;
-  min-height: 550px;
+.main-game{
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  height: 100vh;
-  max-width: 100vw;
-  padding: 2vw;
-  gap: 4%;
-}
 
-.container{
-  display: flex;
-  flex-direction: column;
-  width: 50vw;
-  height: 80%;
-  gap: 6%;
-  padding: 5vh 3vw 9vh 3vw;
-  background-color: var(--mainColor2);
-  border-radius: 4vh;
-  animation: floating 4s ease-in-out infinite;
-  box-shadow: 15px 20px 20px 5px rgba(0, 0, 0, 0.7);
-}
+  .score-and-timer{
+    position: absolute;
+    top: 2%;
+    left: 2%;
 
-.entry{
-  background-color: var(--subColor2);
-  width: 100%;
-  border-radius: 2vh;
-  place-items: center;
-  min-height: 20%;
-  padding: 3%;
-  gap:4%;
-}
+    .curr-score{
+      .score{
+        color: orange;
+      }
+    }
 
-.entry .letter{
-  animation: none;
-}
-
-.letters{
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  grid-template-columns: repeat(4, 1fr);
-  flex: 1;
-  padding: 0 1%;
-  gap: 4% 5%;
-}
-
-.letter{
-  font-size: large;
-  font-weight: bold;
-  color: var(--subColor2);
-  animation: dance 3.5s infinite;
-  width: clamp(50px, 100%, 200px);
-  height: clamp(50px, 100%, 80px);
-  background-color: var(--buttonColor3);
-  padding: 0.5%;
-  border-radius: 20px;
-  border: none;
-  box-shadow: 10px 0px 20px 5px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.12s, color 0.12s;
-
-  &:hover{
-    background-color: var(--buttonColor2);
-    color: var(--font-color2);
+    .timer{
+      .time{
+        color: #ff0112;
+      }
+    }
   }
-}  
 
-@media (min-width:600.5px) {
   .hint-container{
+    max-width: 25vw;
+    font-weight: bold;
+    font-size: 2.5vw;
+    overflow: hidden;
+    border-radius: 40px;
+    padding: 5vh 0;
+  }
+  
+  .act-hint{
+    font-weight: normal;
+  }
+  
+  .hint-button{
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 1vh;
+    right: 1vw;
+    z-index: 101;
+    overflow: hidden;
+  
+    &:hover{
+      cursor: pointer;
+    }
+  }
+  
+  .hint-button img{
+    object-fit: cover;
+    height: 6vh;
+    width: 6vh;
+  }
+  
+  .mobile-hint-container{
+    width:100vw;
+    height:100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    padding: 10vh 0;
+    z-index: 100;
+  }
+  
+  .mobile-hint-container > .hint-container{
+    text-align: left;
+    font-size: large;
+    padding: 3vw;
+    max-height: 80vh;
+    max-width: 30vw;
+    background-color: var(--mainColor2);
+  }
+  
+  .mobile-hint-container .hint{
+    font-size:clamp(0.2em, 3vw, 2em);
+  }
+  
+  .overall{
+    animation: fade-in 0.8s ease-in;
+    min-width: 350px;
+    min-height: 550px;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    height: 100vh;
+    max-width: 100vw;
+    padding: 2vw;
+    gap: 4%;
   }
-
+  
   .container{
-    min-width: 381px;
-    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    height: 80%;
+    gap: 6%;
+    padding: 5vh 3vw 9vh 3vw;
+    background-color: var(--mainColor2);
+    border-radius: 4vh;
+    animation: floating 4s ease-in-out infinite;
+    box-shadow: 15px 20px 20px 5px rgba(0, 0, 0, 0.7);
+  }
+  
+  .entry{
+    background-color: var(--subColor2);
+    width: 100%;
+    border-radius: 2vh;
+    place-items: center;
+    min-height: 20%;
+    padding: 3%;
+    gap:4%;
+  }
+  
+  .entry .letter{
+    animation: none;
+  }
+  
+  .letters{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(4, 1fr);
+    flex: 1;
+    padding: 0 1%;
+    gap: 4% 5%;
+  }
+  
+  .letter{
+    font-size: large;
+    font-weight: bold;
+    color: var(--subColor2);
+    animation: dance 3.5s linear infinite;
+    width: clamp(50px, 100%, 200px);
+    height: clamp(50px, 100%, 80px);
+    background-color: var(--buttonColor3);
+    padding: 0.5%;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 10px 0px 20px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.12s, color 0.12s;
+  
+    &:hover{
+      background-color: var(--buttonColor1);
+      color: var(--font-color2);
+    }
+
+    &:active{
+      background-color: var(--buttonColor2);
+      color: var(--font-color2);
+    }
+  }  
+  
+  @media (min-width:600.5px) {
+    .hint-container{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .container{
+      min-width: 381px;
+      max-width: 600px;
+    }
+  
+    .mobile-hint-container{
+      display: none;
+     }
+  
+    .hint-button{
+      display: none;
+    }
+  }
+  
+}
+
+.end-game{
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 10vw;
+
+  .score-display{
+    
   }
 
-  .mobile-hint-container{
-    display: none;
-   }
+  .game-comment{
+  } 
 
-  .hint-button{
-    display: none;
+  .player-score{
+    color: red;
   }
 }
+
 
 @media (max-width:600px) {
  .wide-screen{
