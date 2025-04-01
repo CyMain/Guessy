@@ -119,7 +119,7 @@ function tryAgain(){
 
 function startGame(){
   console.log('3');
-  timer = 30;
+  timer = 60;
   if(!gameTimeID){
     gameTimeID = setInterval(()=>{
       timer-=1;
