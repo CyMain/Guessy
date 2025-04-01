@@ -204,7 +204,8 @@ function refreshGame(){
 
 function renderSite(){
   const html = `
-    <div class = "rules">Rules:
+    <div class="rules-container">
+      <div class = "rules">Rules:
       <ul>
         <li>
           <p>
@@ -231,6 +232,8 @@ function renderSite(){
         Understood
       </button>
     </div>
+    </div>
+    
   `;
   document.querySelector('main').innerHTML += html;
   document.querySelector('.understood-button').addEventListener('click', ()=>{
@@ -239,6 +242,7 @@ function renderSite(){
 }
 
 function fullSiteRender(){
+  document.querySelector('.rules-container').style.display="none";
   const html = `
     <div class="main-game">
       <div class="confetti-wrapper">
