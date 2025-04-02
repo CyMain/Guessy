@@ -56,7 +56,7 @@ let finalizedLetters = [];
 let mobileHintOpen = false;
 renderSite();
 
-function gameIntro(){console.log('1');
+function gameIntro(){
   const mainGame = document.querySelector('.main-game');
   const stageTag = document.querySelector('.intro-stage');
   const stageTagText = document.querySelector('.stage');
@@ -93,7 +93,6 @@ function gameIntro(){console.log('1');
               intro.style.animation = 'fade-out 0.2s ease-in-out';
               setTimeout(()=>{
                 intro.style.display = 'none';
-                console.log('end of 1');
                 renderGame();
                 startGame();
                 stageTagText.style.transform = 'none';
@@ -114,8 +113,32 @@ function gameIntro(){console.log('1');
   
 }
 
+function endGame(){
+  clearInterval(gameTimeID);
+  gameTimeID = '';
+  document.querySelectorAll('.letter').forEach((button) => {
+    button.style.pointerEvents = 'none';
+  });
+  let mainGame = document.querySelector('.main-game');
+  let endGameTag = document.querySelector('.end-game');
+  let endComment = document.querySelector('.game-comment');
+  let playerScore = document.querySelector('.player-score');
+  mainGame.style.animation = 'fade-out 2s ease-in-out';
+  commentGenerator(gameScore, endComment, playerScore);
+  setTimeout(()=>{
+    mainGame.style.display ='none';
+  }, 2000);
+  setTimeout(()=>{
+    endGameTag.style.display="flex";
+    playerScore.textContent = `${gameScore}`;
+    endGameTag.style.animation = 'fade-in 4s ease-in-out';
+    mainGame.style.animation = 'none';
+    timer = 0;
+    gameScore = 0;
+  }, 3000);
+}
+
 function tryAgain(){
-  console.log('try again clicked.');
   document.querySelector('.try-again').style.pointerEvents = 'none';
   document.querySelector('.end-game').style.animation='fade-out 2s ease-in-out';
   setTimeout(()=>{
@@ -130,13 +153,11 @@ function tryAgain(){
 }
 
 function startGame(){
-  console.log('3');
   timer = 60;
   if(!gameTimeID){
     gameTimeID = setInterval(()=>{
       timer-=1;
       if(timer <= 0){
-        console.log('end of 3');
         endGame();
       }
       let timeTag = document.querySelector('.time');
@@ -155,16 +176,12 @@ function alterMobileHint(){
   if(mobileHintOpen == true){
     document.querySelector('.mobile-hint-container').style.display = "none";
     mobileHintOpen = false;
-    console.log('successful removal of hint container.');
     document.querySelector('.hint-button-img').src ="./assets/images/icons/question-mark-cartoony-icon.png";
   } else{
     document.querySelector('.mobile-hint-container').style.display = "flex";
     mobileHintOpen = true;
-    console.log('successful addition of hint container.');
     document.querySelector('.hint-button-img').src ="./assets/images/icons/close-cartoony-icon.png";
   }
-  console.log(mobileHintOpen);
-
 }
 
 function generateInput(letter){
@@ -196,7 +213,6 @@ function acceptInput(letter){
     generateInput(letter);
   } else{
     gameScore -= randInt(50, 60);
-    console.log('Incorrect input');
   }
   document.querySelectorAll('.score').forEach((score)=>{
     score.textContent = gameScore;
@@ -313,7 +329,6 @@ function fullSiteRender(){
 }
 
 function renderGame(){
-  console.log('2');
   document.querySelector('.main-game').style.display='flex';
   setGuessWord();
   let html = `
@@ -346,7 +361,6 @@ function renderGame(){
   if(window.matchMedia("(max-width: 600px)").matches && mobileHintOpen == false){
     alterMobileHint();  
   }
-  console.log('end of 2');
 }
 
 function randizeArray(arr){
@@ -533,34 +547,6 @@ function hintHTML (){
   })
 }
 
-function endGame(){
-  console.log(4);
-  clearInterval(gameTimeID);
-  gameTimeID = '';
-  document.querySelectorAll('.letter').forEach((button) => {
-    button.style.pointerEvents = 'none';
-  });
-  let mainGame = document.querySelector('.main-game');
-  let endGameTag = document.querySelector('.end-game');
-  let endComment = document.querySelector('.game-comment');
-  let playerScore = document.querySelector('.player-score');
-  mainGame.style.animation = 'fade-out 2s ease-in-out';
-  commentGenerator(gameScore, endComment, playerScore);
-  setTimeout(()=>{
-    mainGame.style.display ='none';
-    console.log('main game gone')
-  }, 2000);
-  setTimeout(()=>{
-    console.log('end-game in.')
-    endGameTag.style.display="flex";
-    playerScore.textContent = `${gameScore}`;
-    endGameTag.style.animation = 'fade-in 4s ease-in-out';
-    mainGame.style.animation = 'none';
-    timer = 0;
-    gameScore = 0;
-    console.log('end of 4') ;
-  }, 3000);
-}
 
 function commentGenerator(gameScore, endComment, playerScore){
   if(gameScore>1000){
