@@ -8,13 +8,13 @@
   height: 100dvh;
 
   .rules{
+    width: max(200px, 85vw);
+    height: max(360px, 68%);
+    padding: 2% 4%;
     display: flex;
     place-content: center;
     place-items: center;
     flex-direction: column;
-    width: max(200px, 85vw);
-    height: max(360px, 68%);
-    padding: 2% 4%;
     border-radius: 20px;
     background-color: var(--mainColor2); 
   }
@@ -46,6 +46,7 @@
     display:flex;
     flex-direction: column;
     justify-content: center;
+    
   }
 
   ul li{
@@ -270,8 +271,18 @@
 
 
 @media (max-width:600px) {
+  .rules{
+    font-size: clamp(10px, 2vh, 20px);
+    padding: auto vw;
+
+    ul{
+      gap:10vw;
+    }
+  }
+
  .wide-screen{
   display: none;
+  /*The desktop hints*/
  }
 
  .mobile-hint-container{
@@ -286,4 +297,10 @@
  .hint-button{
   display: flex;
  }
+}
+
+@media(min-width:600.5px){
+  .rules{
+    
+  }
 }
