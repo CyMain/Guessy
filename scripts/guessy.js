@@ -27,6 +27,18 @@ const guessWords = [{
 },{
   word: "Car",
   hint:"A four-wheeled machine that beeps when others drive badly(not you, of course)."
+},{
+  word: "Penguin",
+  hint:"Bird that always wears a tuxedo"
+},{
+  word: "Fridge",
+  hint:"Keeps food cold so it doesn't spoil"
+},{
+  word: "Allow",
+  hint:"To give permission"
+},{
+  word: "Mercury",
+  hint:"The closest planet to the sun."
 }
 ]
 const pName = getUserName() || 'Player'

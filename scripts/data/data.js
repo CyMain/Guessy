@@ -1,11 +1,8 @@
-let userName;
-
 export function storeUserName(name){
-    userName = name;
-    console.log(userName);
+    localStorage.setItem('userName', name);
+    console.log(localStorage.getItem('userName'));
 }
 
 export function getUserName(){
-    console.log(userName);
-    return userName;
+    return localStorage.getItem('userName');
 }

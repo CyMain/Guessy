@@ -1,4 +1,4 @@
-import { storeUserName } from "./data/data.js";
+import { storeUserName } from './data/data.js';
 
 renderIntro();
 
@@ -7,15 +7,16 @@ function acceptName(){
   const form = document.querySelector('form');
   let sName = document.querySelector('input').value;
   if(sName != ''){
+    storeUserName(sName);
     greeting.innerHTML = `Greetings, ${sName}`;
-  form.classList.add('invisible');
-  form.classList.remove('flex-visible');
-  greeting.classList.add('flex-visible');
-  greeting.classList.remove('invisible');
-  setTimeout(() => {
-    window.location = "./guessy.html";
-  }, 4100)
-  storeUserName(sName);
+    form.classList.add('invisible');
+    form.classList.remove('flex-visible');
+    greeting.classList.add('flex-visible');
+    greeting.classList.remove('invisible');
+    
+    setTimeout(() => {
+      window.location.href = "./guessy.html";
+    }, 4100)
   } else {
     let nameWarning = document.querySelector('.name-warning');
     nameWarning.innerHTML = `Please enter a name.`
@@ -47,10 +48,9 @@ function renderIntro(){
       nameWarning.style.display='flex';
     };
   })
-  document.querySelector('.name-submit').addEventListener('click', ()=>{
-    acceptName();
+  document.querySelector('form').addEventListener('submit', ()=>{
+      acceptName();
   })
-
   setTimeout(()=>{
     document.querySelector('.welcome'). classList.add('invisible');
     document.querySelector('.welcome'). classList.remove('flex-visible');
