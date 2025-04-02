@@ -205,11 +205,12 @@ function refreshGame(){
 function renderSite(){
   const html = `
     <div class="rules-container">
-      <div class = "rules">Rules:
+      <div class = "rules">
+      Rules:
       <ul>
         <li>
           <p>
-            You're given 1 minute to guess as many words as you can.
+            You're given one(1) minute to guess as many words as you can.
           </p>
         </li>
         <li>
@@ -219,12 +220,12 @@ function renderSite(){
         </li>
         <li>
           <p>
-            Game Ends when the time stops.
+            Game ends when the time stops.
           </p>
         </li>
         <li>
           <p>
-            Points are deducted for each incorrect letter.
+            Finally, points are deducted for each incorrect letter.
           </p>
         </li>
       </ul>
@@ -242,63 +243,66 @@ function renderSite(){
 }
 
 function fullSiteRender(){
-  document.querySelector('.rules-container').style.display="none";
-  const html = `
-    <div class="main-game">
-      <div class="confetti-wrapper">
-        <!-- Confetti elements will be created using CSS -->
-      </div>
-      <div class="mobile-hint-container">
-        <div class="hint-container">
-          <p class="hint">
-          </p>
+  document.querySelector('.rules-container').style.animation="fade-out 2s ease-in-out";
+  setTimeout(()=>{
+    document.querySelector('.rules-container').style.display="none";
+    const html = `
+      <div class="main-game">
+        <div class="confetti-wrapper">
+          <!-- Confetti elements will be created using CSS -->
         </div>
-      </div>
-      <div class="overall">
-        <div class="score-and-timer">
-          <div class="curr-score">
-            Score: <span class="score">${gameScore}</span>
-          </div>
-          <div class="timer">
-            Time Remaining: <span class="time">${timer}</span>
+        <div class="mobile-hint-container">
+          <div class="hint-container">
+            <p class="hint">
+            </p>
           </div>
         </div>
-        <button class="hint-button">
-          <img class="hint-button-img" src="./assets/images/icons/question-mark-cartoony-icon.png" alt="show hint button.">
+        <div class="overall">
+          <div class="score-and-timer">
+            <div class="curr-score">
+              Score: <span class="score">${gameScore}</span>
+            </div>
+            <div class="timer">
+              Time Remaining: <span class="time">${timer}</span>
+            </div>
+          </div>
+          <button class="hint-button">
+            <img class="hint-button-img" src="./assets/images/icons/question-mark-cartoony-icon.png" alt="show hint button.">
+          </button>
+          <div class="hint-container">
+            <p class="hint wide-screen">
+            </p>
+          </div>
+          <div class="container">
+        
+          </div>
+          <div class="hint-container">
+            <p class="hint wide-screen">
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="end-game">
+        <div class="game-comment">
+          Congrats.
+        </div>
+        <div class="score-display">
+          Your Score is: <span class="player-score">200</span>
+        </div>
+        <button class="try-again">
+          Try Again
         </button>
-        <div class="hint-container">
-          <p class="hint wide-screen">
-          </p>
-        </div>
-        <div class="container">
-      
-        </div>
-        <div class="hint-container">
-          <p class="hint wide-screen">
-          </p>
-        </div>
       </div>
-    </div>
-    <div class="end-game">
-      <div class="game-comment">
-        Congrats.
-      </div>
-      <div class="score-display">
-        Your Score is: <span class="player-score">200</span>
-      </div>
-      <button class="try-again">
-        Try Again
-      </button>
-    </div>
-    `;
+      `;
   document.querySelector('main').innerHTML += html;
+  document.querySelector('.try-again').onclick = tryAgain;
   gameIntro();
+  }, 2000);
 }
 
 function renderGame(){
   console.log('2');
   document.querySelector('.main-game').style.display='flex';
-  document.querySelector('.try-again').onclick = tryAgain;
   setGuessWord();
   let html = `
     <div class="entry flex-visible">
@@ -449,24 +453,46 @@ function congratulate() {
   }
 
   // Generate confetti
-  for (let i = 0; i < 140; i++) {
-    const confetti = document.createElement("div");
-    confetti.classList.add("confetti-piece");
-    confetti.style.left = `${Math.random() * 100}%`;
-
-    const fallDur = Math.random() * 3 + 3; // Duration between 3s and 6s
-    confetti.dataset.id = i; // Set dataset id
-
-    confetti.style.setProperty("--fall-duration", `${fallDur}s`);
-    confetti.style.setProperty("--confetti-color", getRandomColor());
-
-    confettiWrapper.appendChild(confetti);
-
-    // Ensure the correct `i` value is passed to setTimeout by using a closure
-    setTimeout((confettiId) => {
-      removeNthInstance(".confetti-piece", confettiId);
-    }, fallDur * 1000 - 200, i);
+  if(window.matchMedia('(max-width:600px)')){
+    for (let i = 0; i < 40; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti-piece");
+      confetti.style.left = `${Math.random() * 100}%`;
+  
+      const fallDur = Math.random() * 3 + 3; // Duration between 3s and 6s
+      confetti.dataset.id = i; // Set dataset id
+  
+      confetti.style.setProperty("--fall-duration", `${fallDur}s`);
+      confetti.style.setProperty("--confetti-color", getRandomColor());
+  
+      confettiWrapper.appendChild(confetti);
+  
+      // Ensure the correct `i` value is passed to setTimeout by using a closure
+      setTimeout((confettiId) => {
+        removeNthInstance(".confetti-piece", confettiId);
+      }, fallDur * 1000 - 200, i);
+    }
+  }else if(window.matchMedia('(max-width:600px)')){
+    for (let i = 0; i < 140; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti-piece");
+      confetti.style.left = `${Math.random() * 100}%`;
+  
+      const fallDur = Math.random() * 3 + 3; // Duration between 3s and 6s
+      confetti.dataset.id = i; // Set dataset id
+  
+      confetti.style.setProperty("--fall-duration", `${fallDur}s`);
+      confetti.style.setProperty("--confetti-color", getRandomColor());
+  
+      confettiWrapper.appendChild(confetti);
+  
+      // Ensure the correct `i` value is passed to setTimeout by using a closure
+      setTimeout((confettiId) => {
+        removeNthInstance(".confetti-piece", confettiId);
+      }, fallDur * 1000 - 200, i);
+    }
   }
+  
 }
 
 function removeNthInstance(selector, n) {
@@ -526,7 +552,7 @@ function endGame(){
 
 function commentGenerator(gameScore, endComment, playerScore){
   if(gameScore>1000){
-    endComment.textContent = `How'd you even get this!?`
+    endComment.textContent = `You're pretty good!`
   }else if(gameScore>900){
     endComment.textContent = `Congrats!`
   }else if(gameScore>600){
@@ -538,7 +564,7 @@ function commentGenerator(gameScore, endComment, playerScore){
   }
 
   if(gameScore>600){
-    playerScore.style.color = 'light-green';
+    playerScore.style.color = 'lightgreen';
   } else if(gameScore>=300){
     playerScore.style.color = 'orange';
   }else{

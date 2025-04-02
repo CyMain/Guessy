@@ -29,6 +29,5 @@ body{
 html, body{
   min-width: 350px;
   min-height: 550px;
-  scroll-behavior: unset;
   overflow: hidden;
 }
