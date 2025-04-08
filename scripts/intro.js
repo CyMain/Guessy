@@ -15,7 +15,7 @@ function acceptName(){
     greeting.classList.remove('invisible');
     
     setTimeout(() => {
-      window.location.href = "./guessy.html";
+      window.location.href = "./webpages/guessy.html";
     }, 4100)
   } else {
     let nameWarning = document.querySelector('.name-warning');
