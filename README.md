@@ -1,5 +1,5 @@
 # Guessy
-##The online guessing game
+## The online guessing game
 
 ---
 
